@@ -1,0 +1,7 @@
+c:\users\user\documents\visual studio 2010\Projects\Algorithms\Algorithms.Test\bin\Debug\Algorithms.Test.dll
+c:\users\user\documents\visual studio 2010\Projects\Algorithms\Algorithms.Test\bin\Debug\Algorithms.Test.pdb
+c:\users\user\documents\visual studio 2010\Projects\Algorithms\Algorithms.Test\bin\Debug\Algorithms.exe
+c:\users\user\documents\visual studio 2010\Projects\Algorithms\Algorithms.Test\bin\Debug\Algorithms.pdb
+c:\users\user\documents\visual studio 2010\Projects\Algorithms\Algorithms.Test\obj\Debug\Algorithms.Test.csprojResolveAssemblyReference.cache
+c:\users\user\documents\visual studio 2010\Projects\Algorithms\Algorithms.Test\obj\Debug\Algorithms.Test.dll
+c:\users\user\documents\visual studio 2010\Projects\Algorithms\Algorithms.Test\obj\Debug\Algorithms.Test.pdb
