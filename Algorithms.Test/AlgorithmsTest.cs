@@ -489,5 +489,42 @@ namespace Algorithms.Test
             target.QuickSort(arr, minIdx, maxIdx);
             Assert.AreEqual(expected, arr);
         }
+
+        /// <summary>
+        ///A test for CompareString
+        ///</summary>
+        [TestMethod()]
+        public void GetLogTest()
+        {
+            int value = 8;
+            int baseVal = 2;
+            var result = Algorithms.GetLog(value, baseVal);
+            Assert.AreEqual(3, result);
+
+            value = 9;
+            baseVal = 2;
+            result = Algorithms.GetLog(value, baseVal);
+            Assert.AreEqual(3, result);
+
+            value = 10;
+            baseVal = 10;
+            result = Algorithms.GetLog(value, baseVal);
+            Assert.AreEqual(1, result);
+
+            value = -10;
+            baseVal = 10;
+            result = Algorithms.GetLog(value, baseVal);
+            Assert.AreEqual(0, result);
+
+            value = 1;
+            baseVal = 2;
+            result = Algorithms.GetLog(value, baseVal);
+            Assert.AreEqual(0, result);
+
+            value = 0;
+            baseVal = 2;
+            result = Algorithms.GetLog(value, baseVal);
+            Assert.AreEqual(0, result);
+        }
     }
 }

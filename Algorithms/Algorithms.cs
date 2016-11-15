@@ -10,6 +10,7 @@ namespace Algorithms
         public int X { get; set; }
         public int y { get; set; }
     }
+
     public class Algorithms
     {
         public int x;
@@ -506,16 +507,6 @@ namespace Algorithms
             }
         }
 
-        public struct Point
-	    {
-            public int X;
-            public int Y;
-	    }
-        public struct Point
-	    {
-            public int X;
-            public int Y;
-	    }
         /// <summary>
         /// Compute log of inpute value can compute only full log (GetLog(8,2) = 3, GetLog(9,2) = 3)
         /// </summary>
@@ -539,28 +530,28 @@ namespace Algorithms
         /// </summary>
         /// <param name="points"></param>
         /// <returns></returns>
-        public double FindClosetPointDistance(Point[] points)
-        {
-            double minDistance = double.MaxValue;
-            for (int i = 0; i < points.Length; i++)
-            {
-                for (int j = i + 1; j < points.Length; j++)
-                {
-                    double d = Distance(ref points[i], ref points[j]);
-                    if (d < minDistance)
-                        minDistance = d;
-                }
-            }
-            return minDistance;
-        }
+        //public double FindClosetPointDistance(Point[] points)
+        //{
+        //    double minDistance = double.MaxValue;
+        //    for (int i = 0; i < points.Length; i++)
+        //    {
+        //        for (int j = i + 1; j < points.Length; j++)
+        //        {
+        //            double d = Distance(ref points[i], ref points[j]);
+        //            if (d < minDistance)
+        //                minDistance = d;
+        //        }
+        //    }
+        //    return minDistance;
+        //}
 
-        private double Distance(ref Point p1, ref Point p2)
-        {
-            int difX = p1.X - p2.X;
-            int difY = p1.Y - p2.Y;
+        //private double Distance(ref Point p1, ref Point p2)
+        //{
+        //    int difX = p1.X - p2.X;
+        //    int difY = p1.Y - p2.Y;
 
-            return Math.Sqrt(difX * difX + difY * difY);
-        }
+        //    return Math.Sqrt(difX * difX + difY * difY);
+        //}
 
         //private void SortPointByX(Point[] points)
         //{ 
@@ -572,38 +563,38 @@ namespace Algorithms
         /// </summary>
         /// <param name="points"></param>
         /// <returns></returns>
-        public double FindClosetPointDistance(Point[] points)
-        {
-            double minDistance = double.MaxValue;
-            for (int i = 0; i < points.Length; i++)
-            {
-                for (int j = i + 1; j < points.Length; j++)
-                {
-                    double d = Distance(ref points[i], ref points[j]);
-                    if (d < minDistance)
-                        minDistance = d;
-                }
-            }
-            return minDistance;
-        }
-
-        private double Distance(ref Point p1, ref Point p2)
-        {
-            int difX = p1.X - p2.X;
-            int difY = p1.Y - p2.Y;
-
-            return Math.Sqrt(difX * difX + difY * difY);
-        }
-
-        //private void SortPointByX(Point[] points)
-        //{ 
-
+        //public double FindClosetPointDistance(Point[] points)
+        //{
+        //    double minDistance = double.MaxValue;
+        //    for (int i = 0; i < points.Length; i++)
+        //    {
+        //        for (int j = i + 1; j < points.Length; j++)
+        //        {
+        //            double d = Distance(ref points[i], ref points[j]);
+        //            if (d < minDistance)
+        //                minDistance = d;
+        //        }
+        //    }
+        //    return minDistance;
         //}
-        public static Point GetClosestPointToMe(Point me, Point[] point)
-        {
-            var closestPoint = new Point();
-            return closestPoint;
-        }
+
+        //private double Distance(ref Point p1, ref Point p2)
+        //{
+        //    int difX = p1.X - p2.X;
+        //    int difY = p1.Y - p2.Y;
+
+        //    return Math.Sqrt(difX * difX + difY * difY);
+        //}
+
+        ////private void SortPointByX(Point[] points)
+        ////{ 
+
+        ////}
+        //public static Point GetClosestPointToMe(Point me, Point[] point)
+        //{
+        //    var closestPoint = new Point();
+        //    return closestPoint;
+        //}
 
 
     }
