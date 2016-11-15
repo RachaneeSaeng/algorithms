@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Algorithms
 {
-    enum SortDirection { Ascending, Descending };
+    public enum SortDirection { Ascending, Descending };
 
-    class Algorithms
+    public class Point
+    {
+        public int X { get; set; }
+        public int y { get; set; }
+    }
+    public class Algorithms
     {
         public int x;
 
@@ -444,6 +447,29 @@ namespace Algorithms
                 HanoiTower(1, fromTower, toTower);
                 HanoiTower(diskNum - 1, tempTower, toTower);
             }
+        }
+
+        /// <summary>
+        /// Compute log of inpute value can compute only full log (GetLog(8,2) = 3, GetLog(9,2) = 3)
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="baseValue"></param>
+        /// <returns></returns>
+        public static int GetLog(int value, int baseValue)
+        {
+            for (int i = 1; value >= Math.Pow(baseValue, i); i++)
+            {
+                var powerResult = Math.Pow(baseValue, i);
+                if (value - powerResult < baseValue)
+                    return i;
+            }
+            return 0;
+        }
+
+        public static Point GetClosestPointToMe(Point me, Point[] point)
+        {
+            var closestPoint = new Point();
+            return closestPoint;
         }
 
 

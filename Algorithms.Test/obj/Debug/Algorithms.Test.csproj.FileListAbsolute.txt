@@ -5,3 +5,11 @@ c:\users\user\documents\visual studio 2010\Projects\Algorithms\Algorithms.Test\b
 c:\users\user\documents\visual studio 2010\Projects\Algorithms\Algorithms.Test\obj\Debug\Algorithms.Test.csprojResolveAssemblyReference.cache
 c:\users\user\documents\visual studio 2010\Projects\Algorithms\Algorithms.Test\obj\Debug\Algorithms.Test.dll
 c:\users\user\documents\visual studio 2010\Projects\Algorithms\Algorithms.Test\obj\Debug\Algorithms.Test.pdb
+D:\Git\Algorithms\Algorithms.Test\bin\Debug\Algorithms.Test.dll
+D:\Git\Algorithms\Algorithms.Test\bin\Debug\Algorithms.Test.pdb
+D:\Git\Algorithms\Algorithms.Test\bin\Debug\Algorithms.exe
+D:\Git\Algorithms\Algorithms.Test\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+D:\Git\Algorithms\Algorithms.Test\bin\Debug\Algorithms.pdb
+D:\Git\Algorithms\Algorithms.Test\obj\Debug\Algorithms.Test.csprojResolveAssemblyReference.cache
+D:\Git\Algorithms\Algorithms.Test\obj\Debug\Algorithms.Test.dll
+D:\Git\Algorithms\Algorithms.Test\obj\Debug\Algorithms.Test.pdb
