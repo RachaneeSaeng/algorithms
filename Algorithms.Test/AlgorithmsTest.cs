@@ -82,9 +82,9 @@ namespace Algorithms.Test
         public void BinarySearchTest()
         {
             Algorithms target = new Algorithms(); 
-            int[] arr = { 1, 45, 8, 9, 10, 2, 3, 4, 5, 6, 9 }; 
-            int val = 4; 
-            int expected = 7; 
+            int[] arr = { 1, 3, 9, 12, 14, 15, 18, 20, 21, 23, 24, 25, 26, 27, 28,30 }; 
+            int val = 30; 
+            int expected = 15; 
             int actual = target.BinarySearch(arr, val);
             Assert.AreEqual(expected, actual);            
         }
@@ -476,40 +476,18 @@ namespace Algorithms.Test
         }
 
         /// <summary>
-        ///A test for CompareString
+        ///A test for QuickSort
         ///</summary>
         [TestMethod()]
-        public void GetLogTest()
+        public void QuickSortTest()
         {
-            int value = 8;
-            int baseVal = 2;
-            var result = Algorithms.GetLog(value, baseVal);
-            Assert.AreEqual(3, result);
-
-            value = 9;
-            baseVal = 2;
-            result = Algorithms.GetLog(value, baseVal);
-            Assert.AreEqual(3, result);
-
-            value = 10;
-            baseVal = 10;
-            result = Algorithms.GetLog(value, baseVal);
-            Assert.AreEqual(1, result);
-
-            value = -10;
-            baseVal = 10;
-            result = Algorithms.GetLog(value, baseVal);
-            Assert.AreEqual(0, result);
-
-            value = 1;
-            baseVal = 2;
-            result = Algorithms.GetLog(value, baseVal);
-            Assert.AreEqual(0, result);
-            
-            value = 0;
-            baseVal = 2;
-            result = Algorithms.GetLog(value, baseVal);
-            Assert.AreEqual(0, result);
+            Algorithms target = new Algorithms(); // TODO: Initialize to an appropriate value
+            int[] arr = { 1, 45, 8, 9, 10, 2, 3, 6, 5, 4};
+            int[] expected = { 1, 2, 3, 4, 5, 6, 8, 9, 10, 45 };
+            int minIdx = 0; // TODO: Initialize to an appropriate value
+            int maxIdx = arr.Length -1 ; // TODO: Initialize to an appropriate value
+            target.QuickSort(arr, minIdx, maxIdx);
+            Assert.AreEqual(expected, arr);
         }
     }
 }

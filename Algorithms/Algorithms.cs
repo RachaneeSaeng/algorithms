@@ -316,6 +316,54 @@ namespace Algorithms
 
         }
 
+        /// <summary>
+        /// O = N^2
+        /// The best performance is N
+        /// </summary>
+        /// <param name="arr"></param>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        public void QuickSort(int[] arr, int minIdx, int maxIdx)
+        {
+            // For Recusrion  
+            if (minIdx < maxIdx)
+            {
+                int pivot = Partition(arr, minIdx, maxIdx);
+
+                if (pivot > 1)
+                    QuickSort(arr, minIdx, pivot - 1);
+
+                if (pivot + 1 < maxIdx)
+                    QuickSort(arr, pivot + 1, maxIdx);
+            }
+        }
+
+
+        private int Partition(int[] numbers, int minIdx, int maxIdx)
+        {
+            int pivot = numbers[minIdx];
+            while (true)
+            {
+                while (numbers[minIdx] < pivot) //Stop when found a value is not in the right place
+                    minIdx++;
+
+                while (pivot < numbers[maxIdx]) //Stop when found a value is not in the right place
+                    maxIdx--;
+
+                if (minIdx < maxIdx) //some value stop counter which make minIdx < maxIdx
+                {
+                    //swap
+                    int temp = numbers[maxIdx];
+                    numbers[maxIdx] = numbers[minIdx];
+                    numbers[minIdx] = temp;
+                }
+                else
+                {
+                    return maxIdx;
+                }
+            }
+        }
+
         public bool CheckDuplicate1(int[] arr)
         {
             HashSet<int> set = new HashSet<int>();
@@ -405,19 +453,28 @@ namespace Algorithms
             return new string(letters);
         }
 
+        /// <summary>
+        /// Search on sorted array
+        /// O = log n + 1 (log 8 = 3 (2^3 = 8))
+        /// </summary>
+        /// <param name="arr"></param>
+        /// <param name="val"></param>
+        /// <returns></returns>
         public int BinarySearch(int[] arr, int val)
         {
             int lowIdx = 0;
             int highIdx = arr.Length - 1;
+            int count = 0;
             while (lowIdx <= highIdx)
             {
+                count++;
                 int midIdx = (lowIdx + highIdx) / 2;
                 if (arr[midIdx] == val)
                     return midIdx;
                 if (arr[midIdx] < val)
                     lowIdx = midIdx + 1;
                 else
-                    highIdx = midIdx - 1;
+                    highIdx = midIdx - 1;                
             }
             return -1;
         }
@@ -449,6 +506,11 @@ namespace Algorithms
             }
         }
 
+        public struct Point
+	    {
+            public int X;
+            public int Y;
+	    }
         /// <summary>
         /// Compute log of inpute value can compute only full log (GetLog(8,2) = 3, GetLog(9,2) = 3)
         /// </summary>
@@ -466,6 +528,39 @@ namespace Algorithms
             return 0;
         }
 
+        /// <summary>
+        /// Find minimum distance between 2 point in many points
+        /// O = n^2
+        /// </summary>
+        /// <param name="points"></param>
+        /// <returns></returns>
+        public double FindClosetPointDistance(Point[] points)
+        {
+            double minDistance = double.MaxValue;
+            for (int i = 0; i < points.Length; i++)
+            {
+                for (int j = i + 1; j < points.Length; j++)
+                {
+                    double d = Distance(ref points[i], ref points[j]);
+                    if (d < minDistance)
+                        minDistance = d;
+                }
+            }
+            return minDistance;
+        }
+
+        private double Distance(ref Point p1, ref Point p2)
+        {
+            int difX = p1.X - p2.X;
+            int difY = p1.Y - p2.Y;
+
+            return Math.Sqrt(difX * difX + difY * difY);
+        }
+
+        //private void SortPointByX(Point[] points)
+        //{ 
+
+        //}
         public static Point GetClosestPointToMe(Point me, Point[] point)
         {
             var closestPoint = new Point();
