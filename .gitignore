@@ -10,6 +10,7 @@ _ReSharper.*/
 *.opensdf
 *.tlog
 *.log
+*.trx
 TestResult.xml
 *.VisualState.xml
 Version.cs
