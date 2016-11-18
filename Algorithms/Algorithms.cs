@@ -6,10 +6,25 @@ namespace Algorithms
 {
     public enum SortDirection { Ascending, Descending };
 
-    public class Point
+    public class Point : IComparable
     {
         public int X { get; set; }
-        public int y { get; set; }
+        public int Y { get; set; }
+        public Point(int x, int y)
+        {
+            X = x;
+            Y = y;
+        }
+        public int CompareTo(object obj)
+        {
+            if (obj == null) return 1;
+
+            Point otherPoint = obj as Point;
+            if (otherPoint != null)
+                return this.X.CompareTo(otherPoint.X);
+            else
+                throw new ArgumentException("Object is not a point");
+        }
     }
 
     public static class Algorithms
@@ -223,7 +238,7 @@ namespace Algorithms
             }
         }
 
-        public static void DoMerge(int[] numbers, int left, int mid, int right)
+        private static void DoMerge(int[] numbers, int left, int mid, int right)
         {
             int[] temp = new int[25];
             int i, left_end, num_elements, tmp_pos;
@@ -337,72 +352,107 @@ namespace Algorithms
         #endregion
 
         #region Distance
+
         /// <summary>
         /// Find minimum distance between 2 point in many points
         /// O = n^2
         /// </summary>
         /// <param name="points"></param>
         /// <returns></returns>
-        //public double FindClosetPointDistance(Point[] points)
-        //{
-        //    double minDistance = double.MaxValue;
-        //    for (int i = 0; i < points.Length; i++)
-        //    {
-        //        for (int j = i + 1; j < points.Length; j++)
-        //        {
-        //            double d = Distance(ref points[i], ref points[j]);
-        //            if (d < minDistance)
-        //                minDistance = d;
-        //        }
-        //    }
-        //    return minDistance;
-        //}
+        public static double FindClosetPointDistanceNormal(List<Point> points)
+        {
+            double? minDistance = null;
+            for (int i = 0; i < points.Count; i++)
+            {
+                for (int j = i + 1; j < points.Count; j++)
+                {
+                    var distanceSquare = DistanceSquare(points[i], points[j]);
+                    if (!minDistance.HasValue || distanceSquare < minDistance)
+                        minDistance = distanceSquare;
+                }
+            }
+            return minDistance.HasValue ? Math.Sqrt(minDistance.Value) : -1;
+        }
 
-        //private double Distance(ref Point p1, ref Point p2)
-        //{
-        //    int difX = p1.X - p2.X;
-        //    int difY = p1.Y - p2.Y;
-
-        //    return Math.Sqrt(difX * difX + difY * difY);
-        //}
-
-        //private void SortPointByX(Point[] points)
-        //{ 
-
-        //}
         /// <summary>
         /// Find minimum distance between 2 point in many points
-        /// O = n^2
+        /// O = n log n
         /// </summary>
         /// <param name="points"></param>
         /// <returns></returns>
-        //public double FindClosetPointDistance(Point[] points)
-        //{
-        //    double minDistance = double.MaxValue;
-        //    for (int i = 0; i < points.Length; i++)
-        //    {
-        //        for (int j = i + 1; j < points.Length; j++)
-        //        {
-        //            double d = Distance(ref points[i], ref points[j]);
-        //            if (d < minDistance)
-        //                minDistance = d;
-        //        }
-        //    }
-        //    return minDistance;
-        //}
+        public static double FindClosetPointDistance(List<Point> points)
+        {
+            points.Sort();
+            if (points.Count < 1)
+            {
+                return -1;
+            }
+            else
+            {
+                return ClosetPointDistance(points, 0, points.Count - 1);
+            }
+        }
 
-        //private double Distance(ref Point p1, ref Point p2)
-        //{
-        //    int difX = p1.X - p2.X;
-        //    int difY = p1.Y - p2.Y;
+        private static double ClosetPointDistance(List<Point> points, int leftIdx, int rightIdx)
+        {
+            if (leftIdx >= rightIdx)
+            {
+                return double.MaxValue;
+            }
+            if (leftIdx + 1 == rightIdx)
+            {
+                return Math.Sqrt(DistanceSquare(points[leftIdx], points[rightIdx]));
+            }
 
-        //    return Math.Sqrt(difX * difX + difY * difY);
-        //}
+            // Find closest point in left side and right side
+            int midIdx = (leftIdx + rightIdx) / 2;
+            double closestLeft = ClosetPointDistance(points, leftIdx, midIdx);
+            double closestRight = ClosetPointDistance(points, midIdx + 1, rightIdx);
+            double delta = Math.Min(closestLeft, closestRight);
+            if (delta == 0)
+            {
+                return 0;
+            }
 
-        ////private void SortPointByX(Point[] points)
-        ////{ 
+            // find closest point on each point having X-Xmid < delta
+            double centerIdx = (points[midIdx].X + points[midIdx + 1].X) / 2.0;
+            List<int> leftPotentialPoints = new List<int>();
+            List<int> rightPotentialPoints = new List<int>();
+            for (int i = leftIdx; i <= midIdx; i++)
+            {
+                double d = centerIdx - points[i].X;
+                if (d < delta)
+                    leftPotentialPoints.Add(i);
+            }
+            for (int j = midIdx + 1; j <= rightIdx; j++)
+            {
+                double d = points[j].X - centerIdx;
+                if (d < delta)
+                    rightPotentialPoints.Add(j);
+            }
 
-        ////}
+            foreach (int i in leftPotentialPoints)
+            {
+                foreach (int j in rightPotentialPoints)
+                {
+                    double d = Math.Sqrt(DistanceSquare(points[i], points[j]));
+                    if (d < delta)
+                        delta = d;
+                }
+            }
+
+            return delta;
+        }
+
+
+        private static double DistanceSquare(Point p1, Point p2)
+        {
+            int difX = p1.X - p2.X;
+            int difY = p1.Y - p2.Y;
+
+            return (difX * difX + difY * difY); // Actual distance is Sqrt(difX^2 + difY^2) but we don't need to so to improve performance
+        }
+
         //public static Point GetClosestPointToMe(Point me, Point[] point)
         //{
         //    var closestPoint = new Point();
@@ -410,6 +460,11 @@ namespace Algorithms
         //}
 
         public static void GetShortestPath() { }
+
+        public static double DistancePointToLine()
+        {
+            return 0;
+        }
         #endregion
 
         #region Math
@@ -718,7 +773,7 @@ namespace Algorithms
                 HanoiTower(diskNum - 1, tempTower, toTower);
             }
         }
-          
-        #endregion        
+
+        #endregion
     }
 }
