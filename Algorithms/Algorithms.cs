@@ -774,6 +774,39 @@ namespace Algorithms
             }
         }
 
+        /// <summary>
+        /// File key from provided condition
+        /// </summary>
+        /// <returns></returns>
+        public static string FindKey()
+        {
+            var result = "";
+            for (int i = 0; i <= 999; i++)
+            {
+                var A = i / 100;
+                var B = (i % 100) / 10;
+                var C = i % 10;
+
+                var count = (A == 6 ? 1 : 0) + (B == 8 ? 1 : 0) + (C == 2 ? 1 : 0);
+                if (count != 1)
+                    continue;
+                count = (A == 1 || A == 4 ? 1 : 0) + (B == 6 || B == 4 ? 1 : 0) + (C == 6 || C == 1 ? 1 : 0);
+                if (count != 1)
+                    continue;
+                count = (A == 0 || A == 6 ? 1 : 0) + (B == 2 || B == 6 ? 1 : 0) + (C == 2 || C == 0 ? 1 : 0);
+                if (count != 2)
+                    continue;
+                if (A == 7 || A == 3 || A == 8 || B == 7 || B == 3 || B == 8 || C == 7 || C == 3 || C == 8)
+                    continue;
+                count = (A == 7 || A == 0 ? 1 : 0) + (B == 8 || B == 0 ? 1 : 0) + (C == 8 || C == 7 ? 1 : 0);
+                if (count != 1)
+                    continue;
+                result += string.IsNullOrEmpty(result) ? i.ToString("000") : "," + i.ToString("000"); //incase multi corrected values
+            }
+            return result;
+        }
+
+
         #endregion
     }
 }

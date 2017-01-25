@@ -437,6 +437,16 @@ namespace Algorithms.Test
             Assert.Inconclusive("A method that does not return a value cannot be verified.");
         }
 
+        /// <summary>
+        /// A test for HanoiTower 
+        ///</summary>
+        [TestMethod()]
+        public void FindKey()
+        {           
+            var actual = Algorithms.FindKey();
+            Assert.AreEqual("042", actual);
+        }
+
         #endregion
     }
 }
