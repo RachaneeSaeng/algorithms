@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace Algorithms
 {
@@ -58,13 +59,38 @@ namespace Algorithms
             return true;
         }
 
+        /// <summary>
+        /// Min/Max sum of arr.lengt - 1 element
+        /// Sort first and remove smallest number to find max sum and remove largest number to find min sum may be better
+        /// </summary>
+        /// <param name="arr"></param>
+        /// <returns></returns>
+        public static string MinMaxSum(int[] arr)
+        {
+            //string[] arr_temp = Console.ReadLine().Split(' ');
+            //int[] arr = Array.ConvertAll(arr_temp, Int32.Parse);
+
+            long min = long.MaxValue;
+            long max = 0;
+            for (int i = 0; i < 5; i++)
+            {
+                var sum = arr.Where((value, index) => index != i).Sum(value => Convert.ToInt64(value));
+                if (sum < min)
+                    min = sum;
+                if (sum > max)
+                    max = sum;
+            }
+            return string.Format("{0} {1}", min, max);
+        }
         #endregion
 
         #region Sorting
 
         /// <summary>
-        /// O = N^2
+        /// O = N * Log N
         /// The best performance is N
+        /// set pivot at an index and make everything in left hand side less than it and right hand side more than it
+        /// do recursively
         /// </summary>
         /// <param name="arr"></param>
         /// <param name="left"></param>
@@ -74,33 +100,33 @@ namespace Algorithms
             // For Recusrion  
             if (minIdx < maxIdx)
             {
-                int pivot = Partition(arr, minIdx, maxIdx);
+                int pivotIndex = Partition(arr, minIdx, maxIdx);
 
-                if (pivot > 1)
-                    QuickSort(arr, minIdx, pivot - 1);
+                if (pivotIndex > 1)
+                    QuickSort(arr, minIdx, pivotIndex - 1);
 
-                if (pivot + 1 < maxIdx)
-                    QuickSort(arr, pivot + 1, maxIdx);
+                if (pivotIndex + 1 < maxIdx)
+                    QuickSort(arr, pivotIndex + 1, maxIdx);
             }
         }
 
-        private static int Partition(int[] numbers, int minIdx, int maxIdx)
+        private static int Partition(int[] arr, int minIdx, int maxIdx)
         {
-            int pivot = numbers[minIdx];
+            int pivotValue = arr[minIdx];
             while (true)
             {
-                while (numbers[minIdx] < pivot) //Stop when found a value is not in the right place
+                while (arr[minIdx] < pivotValue) //Stop when found a value is not in the right place
                     minIdx++;
 
-                while (pivot < numbers[maxIdx]) //Stop when found a value is not in the right place
+                while (pivotValue < arr[maxIdx]) //Stop when found a value is not in the right place
                     maxIdx--;
 
-                if (minIdx < maxIdx) //some value stop counter which make minIdx < maxIdx
+                if (minIdx < maxIdx) //some value stop counter in the upper conditions which make minIdx < maxIdx
                 {
                     //swap
-                    int temp = numbers[maxIdx];
-                    numbers[maxIdx] = numbers[minIdx];
-                    numbers[minIdx] = temp;
+                    int temp = arr[maxIdx];
+                    arr[maxIdx] = arr[minIdx];
+                    arr[minIdx] = temp;
                 }
                 else
                 {
@@ -109,6 +135,11 @@ namespace Algorithms
             }
         }
 
+        /// <summary>
+        /// find the smallest in list and place in the right order
+        /// like manual action
+        /// </summary>
+        /// <param name="a"></param>
         public static void SelectionSort(int[] a) //O = n^2
         {
             //int count = 0;
@@ -118,7 +149,7 @@ namespace Algorithms
                 for (int j = i + 1; j < a.Length; j++) // get index of smallest value in remain list
                 {
                     //count++;
-                    if (a[minIdx] > a[j]) minIdx = j;
+                    if (a[j] < a[minIdx]) minIdx = j;
                 }
                 if (minIdx != i)
                 {
@@ -129,26 +160,35 @@ namespace Algorithms
             }
         }
 
-        public static void InsertionSort(int[] arr) //O = n^2 , 0 = n
+        /// <summary>
+        /// Start for second element and look back to left hand side 
+        /// pick current value store in temp and compare the value the each values in left hand 
+        /// if current value less than a value, then ship elements right and insert the current value at the right place
+        /// </summary>
+        /// <param name="arr"></param>
+        public static void InsertionSort(int[] ar) //O = n^2 , 0 = n
         {
             //better performance if some element sorted
-            //int count = 0;
-            for (int i = 1; i < arr.Length; i++)
+            long count = 0;
+            int len = ar.Length;
+            for (int i = 1; i < len; i++)
             {
-                int temp = arr[i];
-                int j = i;
-                while (j >= 1 && temp < arr[j - 1])
+                var focusingValue = ar[i];
+                var rightIndex = i;
+                for (int j = i - 1; j >= 0; j--)
                 {
-                    //count++;
-                    arr[j] = arr[j - 1];
-                    j--;
+                    if (focusingValue < ar[j])
+                    {
+                        var temp = ar[j];
+                        ar[j + 1] = ar[j];
+                        rightIndex = j;
+                        count++;
+                    }
                 }
-                if (j != i)
-                    arr[j] = temp;
-                //else
-                //    count++;
+                if (rightIndex != i)
+                    ar[rightIndex] = focusingValue;
             }
-
+            Console.WriteLine(count);
         }
 
         public static void ShellSort(int[] arr) //O = n^3/2 , 0 = n
@@ -175,17 +215,21 @@ namespace Algorithms
             }
         }
 
-        public static void BubleSort(int[] arr) //O = n^2
+        // swap current and next index until current < next
+        // like kid line arrangement, if you found someone is in wrong place then you swap him with next friend and see if he in the right place
+        // do it from starting every time until everyone is in the right place
+        //O = n^2
+        public static void BubleSort(int[] arr) 
         {
             bool isSorted = false;
-            int count = 0;
+            ///int count = 0;
             //sorting an array
-            for (int i = 0; (i < arr.Length - 1) && !isSorted; i++) //leave the last member
+            for (int i = 0; (i < arr.Length - 1) && !isSorted; i++) //This i is just for lopp counting 
             {
                 isSorted = true;
                 for (int j = 0; j < (arr.Length - 1 - i); j++)
                 {
-                    count++;
+                    //count++;
                     if (arr[j] > arr[j + 1])
                     {
                         int temp = arr[j];
@@ -197,41 +241,14 @@ namespace Algorithms
             }
 
         }
-
-        /// <summary>
-        /// Search on sorted array
-        /// O = log n + 1 (log 8 = 3 (2^3 = 8))
-        /// </summary>
-        /// <param name="arr"></param>
-        /// <param name="val"></param>
-        /// <returns></returns>
-        public static int BinarySearch(int[] arr, int val)
-        {
-            int lowIdx = 0;
-            int highIdx = arr.Length - 1;
-            int count = 0;
-            while (lowIdx <= highIdx)
-            {
-                count++;
-                int midIdx = (lowIdx + highIdx) / 2;
-                if (arr[midIdx] == val)
-                    return midIdx;
-                if (arr[midIdx] < val)
-                    lowIdx = midIdx + 1;
-                else
-                    highIdx = midIdx - 1;
-            }
-            return -1;
-        }
-
-
+                
         public static void MergeSortRecursive(int[] numbers, int left, int right)
         {
             int mid;
 
-            if (right > left)
+            if (left < right)
             {
-                mid = (right + left) / 2;
+                mid = (left + right) / 2;
                 MergeSortRecursive(numbers, left, mid);
                 MergeSortRecursive(numbers, (mid + 1), right);
                 DoMerge(numbers, left, (mid + 1), right);
@@ -268,7 +285,12 @@ namespace Algorithms
             }
         }
 
-        public static void Sort(int[] arr, SortDirection dir)
+        /// <summary>
+        /// Start for second element and look back to left hand side 
+        /// if current value less than prevoius value than swap until the value is in the right palce 
+        /// </summary>
+        /// <param name="arr"></param>
+        public static void Sort(int[] arr)
         {
             //better performance if some element sorted
             //int count = 0;
@@ -280,18 +302,12 @@ namespace Algorithms
                 if (curIdx - 1 >= 0)
                 {
                     int prevVal = arr[curIdx - 1];
-                    if (dir == SortDirection.Ascending && curVal < prevVal)
+                    if (curVal < prevVal)
                     {
                         arr[curIdx - 1] = curVal;
                         arr[curIdx] = prevVal;
                         curIdx--;
-                    }
-                    else if (dir == SortDirection.Descending && curVal > prevVal)
-                    {
-                        arr[curIdx - 1] = curVal;
-                        arr[curIdx] = prevVal;
-                        curIdx--;
-                    }
+                    }                    
                     else
                     {
                         curIdx++;
@@ -304,11 +320,49 @@ namespace Algorithms
             };
 
         }
+               
+        #endregion
 
-        public static int FindMin(int[] arr, int startIdx, int toIdx)
+        #region Searching
+
+        /// <summary>
+        /// Search on sorted array
+        /// O = log n + 1 (log 8 = 3 (2^3 = 8))
+        /// </summary>
+        /// <param name="arr"></param>
+        /// <param name="val"></param>
+        /// <returns></returns>
+        public static int BinarySearch(int[] arr, int val)
+        {
+            int lowIdx = 0;
+            int highIdx = arr.Length - 1;
+            //int count = 0;
+            while (lowIdx <= highIdx)
+            {
+                //count++;
+                int midIdx = (lowIdx + highIdx) / 2;
+                if (arr[midIdx] == val)
+                    return midIdx;
+                if (arr[midIdx] < val)
+                    lowIdx = midIdx + 1;
+                else
+                    highIdx = midIdx - 1;
+            }
+            return -1;
+        }
+        
+        /// <summary>
+        /// Star from toIdx as min and compare to toIndx-1 and select min from the 2 values and return as min
+        /// then compare to toIndx-1-1 and return min
+        /// </summary>
+        /// <param name="arr"></param>
+        /// <param name="startIdx"></param>
+        /// <param name="toIdx"></param>
+        /// <returns></returns>
+        public static int FindMin(int[] arr, int startIdx, int toIdx) //O = n
         {
             if (startIdx == toIdx)
-                return arr[startIdx];
+                return arr[toIdx];
             else
             {
                 int min = FindMin(arr, startIdx + 1, toIdx);
@@ -319,36 +373,6 @@ namespace Algorithms
             }
         }
 
-        public static List<int> GetTwoBig(int[] arr) //O=n
-        {
-            int? fb = null;
-            int? sb = null;
-            for (int i = 0; i < arr.Length; i++)
-            {
-                if (fb == null)
-                    fb = arr[i];
-                else if (fb < arr[i])
-                {
-                    sb = fb;
-                    fb = arr[i];
-                }
-                else if (sb == null || sb < arr[i])
-                {
-                    sb = arr[i];
-                }
-            }
-
-            List<int> ret = new List<int>();
-            if (fb.HasValue)
-                ret.Add(fb.GetValueOrDefault());
-            if (sb.HasValue)
-                ret.Add(sb.GetValueOrDefault());
-
-            return ret;
-        }
-        #endregion
-
-        #region Searching
         #endregion
 
         #region Distance
@@ -704,6 +728,113 @@ namespace Algorithms
 
         #endregion
 
+        #region Metric
+
+        public static int DiagonalDifferrent(int[][] squareMetric)
+        {
+            //int n = Convert.ToInt32(Console.ReadLine());
+            //int[][] a = new int[n][];
+            //for (int a_i = 0; a_i < n; a_i++)
+            //{
+            //    string[] a_temp = Console.ReadLine().Split(' ');
+            //    a[a_i] = Array.ConvertAll(a_temp, Int32.Parse);
+            //}
+
+            int primaryDia = 0;
+            int secondDia = 0;
+            for (int i = 0; i < squareMetric.Length; i++)
+            {
+                primaryDia += squareMetric[i][i];
+                secondDia += squareMetric[i][squareMetric.Length - i - 1];
+            }
+
+            return Math.Abs(primaryDia - secondDia);
+        }
+
+        #endregion
+
+        #region Clock
+        /// <summary>
+        /// Find angle between hour hand and minute hand
+        /// </summary>
+        /// <param name="h"></param>
+        /// <param name="m"></param>
+        /// <returns></returns>
+        public static double ClockAngle(int h, int m)
+        {
+            double hAngle = ((h % 12) + (Convert.ToDouble(m) / 60)) * 30; // 1 hour = 360/12 = 30
+            double mAngle = m * 6; // 1 minutes = 360/60 = 6
+            double angle = Math.Abs(hAngle - mAngle);
+            angle = Math.Min(angle, 360 - angle); // get narrowest angle
+            return angle;
+        }
+
+        /// <summary>
+        /// Convert from AM/PM format to 24 hour format
+        /// </summary>
+        /// <param name="latinTime"></param>
+        /// <returns></returns>
+        public static string TimeConvertion(string latinTime)
+        {
+            var hour = Convert.ToInt32(latinTime.Substring(0, 2));
+            var min = latinTime.Substring(3, 2);
+            var second = latinTime.Substring(6, 2);
+            var part = latinTime.Substring(8, 2).ToLower();
+
+            var militaryHour = (hour == 12 ? 0 : hour);
+            if (part == "pm")
+                militaryHour += 12;
+
+            return string.Format("{0:00}:{1}:{2}", militaryHour, min, second);
+        }
+        #endregion
+
+        #region Grouping
+        public static void Select2Astronauts()
+        {
+            string[] n_p = Console.ReadLine().Split(' ');
+            int n = Convert.ToInt32(n_p[0]);
+            int p = Convert.ToInt32(n_p[1]);
+
+            List<int[]> arr = new List<int[]>();
+            for (int i = 0; i < p; i++)
+            {
+                string[] a_temp = Console.ReadLine().Split(' ');
+                arr.Add(Array.ConvertAll(a_temp, Int32.Parse));
+            }
+
+            List<HashSet<int>> countryHaveMultiAstros = new List<HashSet<int>>();            
+            while (arr.Count > 0)
+            {
+                var astrosInCountry = new HashSet<int>() { arr[0][0], arr[0][1] };
+
+                var otherAstrosInCountry = arr.Where(set => astrosInCountry.Contains(set[0]) || astrosInCountry.Contains(set[1]));
+                while (otherAstrosInCountry.Count() > 0)
+                {
+                    foreach (var items in otherAstrosInCountry.ToList())
+                    {
+                        astrosInCountry.Add(items[0]);
+                        astrosInCountry.Add(items[1]);
+                        arr.Remove(items);
+                    }
+                    otherAstrosInCountry = arr.Where(set => astrosInCountry.Contains(set[0]) || astrosInCountry.Contains(set[1]));
+                }
+               
+                countryHaveMultiAstros.Add(astrosInCountry);
+            }
+           
+            //Total methods for each astronauts
+            long sumMethod = (long)n * (long)(n - 1) / 2;
+            //Subtract methods for astronauts in same country
+            foreach (var item in countryHaveMultiAstros)
+            {
+                sumMethod -= item.Count() * (item.Count() - 1) / (long)2;
+            }
+
+            Console.WriteLine(sumMethod);
+        }
+        #endregion
+
         #region Other
 
         /// <summary>
@@ -739,22 +870,7 @@ namespace Algorithms
             }
             return new int[0];
         }
-
-        /// <summary>
-        /// Find angle between hour hand and minute hand
-        /// </summary>
-        /// <param name="h"></param>
-        /// <param name="m"></param>
-        /// <returns></returns>
-        public static double ClockAngle(int h, int m)
-        {
-            double hAngle = ((h % 12) + (Convert.ToDouble(m) / 60)) * 30; // 1 hour = 360/12 = 30
-            double mAngle = m * 6; // 1 minutes = 360/60 = 6
-            double angle = Math.Abs(hAngle - mAngle);
-            angle = Math.Min(angle, 360 - angle); // get narrowest angle
-            return angle;
-        }
-
+                
         /// <summary>
         /// Print solution for HanoiTower problem (move disk stack, bigest in bottom smallest in top, from a tower to another tower. big must under small all the time.)
         /// </summary>
@@ -806,7 +922,117 @@ namespace Algorithms
             return result;
         }
 
+        public static void FindAstronuts()
+        {
+            string[] n_p = Console.ReadLine().Split(' ');
+            int n = Convert.ToInt32(n_p[0]);
+            int p = Convert.ToInt32(n_p[1]);
 
+            List<int[]> arr = new List<int[]>();
+
+            for (int i = 0; i < p; i++)
+            {
+                string[] a_temp = Console.ReadLine().Split(' ');
+                arr.Add(Array.ConvertAll(a_temp, Int32.Parse));
+            }
+
+            List<List<int>> countries = new List<List<int>>();
+            for (int i = 0; i < n - 1; i++)
+            {
+                if (countries.Where(list => list.Contains(i)).Count() == 0)
+                {
+                    var astrosInCountry = new List<int>();
+                    astrosInCountry.Add(i);
+
+                    while ((arr.Where(a => astrosInCountry.Contains(a[0]) || astrosInCountry.Contains(a[1]))).Count() > 0)
+                    {
+                        var otherAstrosInCountry = arr.Where(a => astrosInCountry.Contains(a[0]) || astrosInCountry.Contains(a[1]));
+                        foreach (var items in otherAstrosInCountry.ToList())
+                        {
+                            astrosInCountry.AddRange(items);
+                            arr.Remove(items);
+                        }
+                    }
+
+                    countries.Add(astrosInCountry);
+                }
+            }
+
+            var sumMethod = 0;
+            for (int i = 0; i < countries.Count; i++)
+            {
+                var thisCountryCount = countries[i].Distinct().Count();
+                var otherCountryCount = 0;
+                for (int j = i + 1; j < countries.Count; j++)
+                {
+                    otherCountryCount += countries[j].Distinct().Count();
+                }
+                sumMethod += thisCountryCount * otherCountryCount;
+            }
+
+            Console.WriteLine(sumMethod);
+        }
+
+        public static void GetLargestCost()
+        {
+            int testNumber = Convert.ToInt32(Console.ReadLine());
+            List<int[]> testCases = new List<int[]>();
+            for (int i = 0; i < testNumber; i++)
+            {
+                int n = Convert.ToInt32(Console.ReadLine());
+                string[] arr_temp = "22 89 99 7 66 32 2 68 33 75 92 84 10 94 28 54 12 9 80 43 21 51 92 20 97 7 25 67 17 38 100 86 4 83 20 6 81 58 59 53 2 54 62 25 35 79 64 27 49 32 95 100 20 58 39 92 30 67 89 58 81 100 66 73 29 75 81 70 55 18 28 7 35 98 52 30 11 69 48 84 54 13 14 15 86 34 82 92 26 8 53 62 57 50 31 61".Split(' ');
+                int[] arr = Array.ConvertAll(arr_temp, Int32.Parse);
+                testCases.Add(arr);
+            }
+
+            foreach (var test in testCases)
+            {
+                int loSum = 0;
+                int hiSum = 0;
+                for (int i = 1; i < test.Length; i++)
+                {
+                    // current is low
+                    var lo2Lo = 0;
+                    var hi2Lo = Math.Abs(test[i - 1] - 1);
+                    // current is high
+                    var lo2Hi = Math.Abs(test[i] - 1);
+                    var hi2Hi = Math.Abs(test[i - 1] - test[i]);
+
+                    var newLoSum = Math.Max(loSum + lo2Lo, hiSum + hi2Lo);
+                    var newHiSum = Math.Max(loSum + lo2Hi, hiSum + hi2Hi);
+
+                    loSum = newLoSum;
+                    hiSum = newHiSum;
+                }
+
+                Console.WriteLine(Math.Max(loSum, hiSum));
+            }
+        }
+
+        public static string DayOfProgrammer(int year)
+        {
+            int febDays = 28;
+            if (year < 1918 && (year % 4 ) == 0)
+                febDays = 29;
+            else if (year == 1918)            
+                febDays = 15;
+            else if (year > 1918 && ((year % 400) == 0 || ((year % 4) == 0 && (year % 100) != 0)))
+                febDays = 29;
+            
+            int[] dayInMonths = new int[]{31, febDays, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+            int sumDays = 0;
+            for (int i = 0; i < 12; i++)
+            {
+                sumDays += dayInMonths[i];
+                if (sumDays >= 256)
+                {
+                    sumDays -= dayInMonths[i];
+                    int remainDays = 256 - sumDays;
+                    return string.Format("{0:00}.{1:00}.{2}", remainDays, i + 1, year);
+                }
+            }
+            return "";
+        }
         #endregion
     }
 }
