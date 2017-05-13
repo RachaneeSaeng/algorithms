@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Diagnostics;
 using System.Collections;
-using System.Text.RegularExpressions;
-using System.IO;
+using System.Collections.Generic;
 //using System.Diagnostics.Contracts;
 
 namespace Algorithms
 {
+
     class Program
     {
         delegate void TestDelegate(string s);
@@ -18,6 +14,14 @@ namespace Algorithms
         static long[][] dp = new long[n][];
         static char[] ar = new char[n];
         static int mod = 1000000007;
+
+        class People
+        {
+            public int Type { get; set; }
+            public int ArriveTime { get; set; }
+            public int Floor { get; set; }
+            //public int DelayTime { get; set; }
+        }
 
         static void Main(string[] args)
         {
@@ -36,25 +40,68 @@ namespace Algorithms
             //    arrGroups.Add(arr);
             //}
 
-            n = Convert.ToInt32(Console.ReadLine());
+            //n = Convert.ToInt32(Console.ReadLine());
 
-            byte[] inputBuffer = new byte[n+2];
-            Stream inputStream = Console.OpenStandardInput(inputBuffer.Length);
-            Console.SetIn(new StreamReader(inputStream, Console.InputEncoding, false, inputBuffer.Length));
-            string numbers = Console.ReadLine();
+            //byte[] inputBuffer = new byte[n + 2];
+            //Stream inputStream = Console.OpenStandardInput(inputBuffer.Length);
+            //Console.SetIn(new StreamReader(inputStream, Console.InputEncoding, false, inputBuffer.Length));
+            //string numbers = Console.ReadLine();
 
             //string numbers = Console.ReadLine();
-            ar = numbers.ToCharArray();
-             
-            for (int i = 0; i < 20000; i++)
-            {
-                dp[i] = new long[]{-1, -1, -1, -1, -1, -1, -1, -1};
-            }
+            //ar = numbers.ToCharArray();
 
-            long ans = GetNumberHavingThisRemain(0, 0);
+            //for (int i = 0; i < 20000; i++)
+            //{
+            //    dp[i] = new long[] { -1, -1, -1, -1, -1, -1, -1, -1 };
+            //}
 
-            Console.WriteLine((ans - 1) % mod);
+            //long ans = GetNumberHavingThisRemain(0, 0);
 
+
+            //int n = Convert.ToInt32(Console.ReadLine());
+            //string[] squares_temp = Console.ReadLine().Split(' ');
+            //int[] squares = Array.ConvertAll(squares_temp, Int32.Parse);
+            //string[] tokens_d = Console.ReadLine().Split(' ');
+            //int d = Convert.ToInt32(tokens_d[0]);
+            //int m = Convert.ToInt32(tokens_d[1]);
+
+            //int count = 0;
+            //for (int i = 0; i <= n-m; i++)
+            //{
+            //    int sum = 0;
+            //    for (int j = 0; j < m; j++)
+            //    {
+            //        sum += squares[i+j];                   
+            //    }
+
+            //    if (sum == d)
+            //        count++;
+            //}
+            //Console.WriteLine(count);
+
+            //string[] tokens_r = Console.ReadLine().Split(' ');
+            //int r = Convert.ToInt32(tokens_r[0]);
+            //int c = Convert.ToInt32(tokens_r[1]);
+            //for (int i = 0; i < r; i++)
+            //{
+            //    Console.WriteLine(new String('+', c).Replace("+", "..O.."));
+            //    Console.WriteLine(new String('+', c).Replace("+", "O.o.O"));
+            //    Console.WriteLine(new String('+', c).Replace("+", "..O.."));
+            //}
+
+            int n = Convert.ToInt32(Console.ReadLine());
+            string[] tokens_rb = Console.ReadLine().Split(' ');
+            int rb = Convert.ToInt32(tokens_rb[0]);
+            int rg = Convert.ToInt32(tokens_rb[1]);
+            int br = Convert.ToInt32(tokens_rb[2]);
+            int bg = Convert.ToInt32(tokens_rb[3]);
+            string[] tokens_gr = Console.ReadLine().Split(' ');
+            int gr = Convert.ToInt32(tokens_gr[0]);
+            int gb = Convert.ToInt32(tokens_gr[1]);
+
+
+
+            Console.WriteLine("{0} {1}", round, time);
             //int[] ar = { 2, 4, 6, 8, 3 };
             //Console.WriteLine("{0}", string.Join(" ", ar.Select(v => v.ToString()).ToArray()));
 

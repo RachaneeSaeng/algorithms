@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using static Algorithms.Algorithms;
 
 namespace Algorithms.Test
 {
@@ -427,7 +428,7 @@ namespace Algorithms.Test
         ///</summary>
         [TestMethod()]
         public void FindKey()
-        {           
+        {
             var actual = Algorithms.FindKey();
             Assert.AreEqual("042", actual);
         }
@@ -442,6 +443,243 @@ namespace Algorithms.Test
             Assert.AreEqual("13.09.2017", actual);
         }
 
+        /// <summary>
+        /// A test for FindGreatXor 
+        ///</summary>
+        [TestMethod()]
+        public void FindGreatXor()
+        {
+            double actual = Algorithms.FindGreatXor(10);
+            Assert.AreEqual(5, actual);
+        }
+
+        /// <summary>
+        /// A test for GetSmallestLarger 
+        ///</summary>
+        [TestMethod()]
+        public void GetSmallestLarger()
+        {
+            string actual = Algorithms.GetSmallestLarger("ab");
+            Assert.AreEqual("ba", actual);
+            actual = Algorithms.GetSmallestLarger("bb");
+            Assert.AreEqual("no answer", actual);
+            actual = Algorithms.GetSmallestLarger("hefg");
+            Assert.AreEqual("hegf", actual);
+            actual = Algorithms.GetSmallestLarger("dhck");
+            Assert.AreEqual("dhkc", actual);
+            actual = Algorithms.GetSmallestLarger("dkhc");
+            Assert.AreEqual("hcdk", actual);
+        }
+
+        /// <summary>
+        /// A test for Elevator 
+        ///</summary>
+        [TestMethod()]
+        public void Elevator()
+        {
+            List<People> people = new List<People>
+            {
+                new People {Type = 1, ArriveTime = 2, Floor = 1 },
+                new People {Type = 1, ArriveTime = 3, Floor = 1 },
+                new People {Type = 2, ArriveTime = 4, Floor = 1 },
+                new People {Type = 1, ArriveTime = 5, Floor = 2 },
+                new People {Type = 2, ArriveTime = 6, Floor = 2 },
+            };
+            int actual = Algorithms.Elevator(5, 2, 2, 4, people);
+            Assert.AreEqual(10, actual);
+        }
+
+        /// <summary>
+        /// A test for Elevator 
+        ///</summary>
+        [TestMethod()]
+        public void Elevator1()
+        {
+            List<People> people = new List<People>
+            {
+                new People {Type = 1, ArriveTime = 2, Floor = 1 },
+                new People {Type = 1, ArriveTime = 3, Floor = 1 },
+                new People {Type = 2, ArriveTime = 4, Floor = 1 },
+                new People {Type = 1, ArriveTime = 5, Floor = 2 },
+                new People {Type = 2, ArriveTime = 6, Floor = 2 },
+            };
+            int actual = Algorithms.Elevator(5, 3, 2, 4, people);
+            Assert.AreEqual(12, actual);
+
+        }
+
+        /// <summary>
+        /// A test for Elevator 
+        ///</summary>
+        [TestMethod()]
+        public void Elevator3()
+        {
+            List<People> people = new List<People>
+            {
+                new People {Type = 1, ArriveTime = 2, Floor = 1 },
+                new People {Type = 1, ArriveTime = 3, Floor = 1 },
+                new People {Type = 2, ArriveTime = 4, Floor = 1 },
+                new People {Type = 1, ArriveTime = 5, Floor = 2 },
+                new People {Type = 2, ArriveTime = 6, Floor = 2 },
+            };
+            int actual = Algorithms.Elevator(5, 6, 2, 3, people);
+            Assert.AreEqual(28, actual);
+
+        }
+        /// <summary>
+        /// A test for Elevator 
+        ///</summary>
+        [TestMethod()]
+        public void Elevator4()
+        {
+            List<People> people = new List<People>
+            {
+                new People {Type = 1, ArriveTime = 2, Floor = 1 },
+                new People {Type = 1, ArriveTime = 3, Floor = 1 },
+                new People {Type = 2, ArriveTime = 4, Floor = 1 },
+                new People {Type = 1, ArriveTime = 5, Floor = 2 },
+                new People {Type = 2, ArriveTime = 6, Floor = 2 },
+            };
+            int actual = Algorithms.Elevator(5, 6, 1, 3, people);
+            Assert.AreEqual(44, actual);
+        }
+
+        /// <summary>
+        /// A test for Elevator 
+        ///</summary>
+        [TestMethod()]
+        public void Elevator5()
+        {
+            List<People> people = new List<People>
+            {
+                new People {Type = 2, ArriveTime = 2, Floor = 1 },
+                new People {Type = 2, ArriveTime = 3, Floor = 1 },
+                new People {Type = 2, ArriveTime = 4, Floor = 1 },
+                new People {Type = 2, ArriveTime = 5, Floor = 2 },
+                new People {Type = 2, ArriveTime = 6, Floor = 2 },
+            };
+            int actual = Algorithms.Elevator(5, 2, 2, 3, people);
+            Assert.AreEqual(10, actual);
+        }
+
+
+        /// <summary>
+        /// A test for Elevator 
+        ///</summary>
+        [TestMethod()]
+        public void Elevator6()
+        {
+            List<People> people = new List<People>
+            {
+                new People {Type = 1, ArriveTime = 2, Floor = 1 },
+                new People {Type = 1, ArriveTime = 3, Floor = 1 },
+                new People {Type = 1, ArriveTime = 4, Floor = 1 },
+                new People {Type = 1, ArriveTime = 5, Floor = 2 },
+                new People {Type = 1, ArriveTime = 6, Floor = 2 },
+            };
+            int actual = Algorithms.Elevator(5, 6, 1, 4, people);
+            Assert.AreEqual(44, actual);
+        }
+
+
+        /// <summary>
+        /// A test for Elevator 
+        ///</summary>
+        [TestMethod()]
+        public void Elevator7()
+        {
+            List<People> people = new List<People>
+            {
+                new People {Type = 1, ArriveTime = 2, Floor = 1 },
+                new People {Type = 1, ArriveTime = 3, Floor = 1 },
+                new People {Type = 1, ArriveTime = 4, Floor = 1 },
+                new People {Type = 1, ArriveTime = 5, Floor = 2 },
+                new People {Type = 1, ArriveTime = 6, Floor = 2 },
+            };
+            int actual = Algorithms.Elevator(5, 6, 1, 4, people);
+            Assert.AreEqual(44, actual);
+        }
+
+        /// <summary>
+        /// A test for Elevator 
+        ///</summary>
+        [TestMethod()]
+        public void Elevator8()
+        {
+            List<People> people = new List<People>
+            {
+                new People {Type = 1, ArriveTime = 2, Floor = 1 },
+            };
+            int actual = Algorithms.Elevator(1, 5, 3, 0, people);
+            Assert.AreEqual(8, actual);
+        }
+        /// <summary>
+        /// A test for Elevator 
+        ///</summary>
+        [TestMethod()]
+        public void Elevator9()
+        {
+            List<People> people = new List<People>
+            {
+                new People {Type = 1, ArriveTime = 2, Floor = 1 },
+                new People {Type = 2, ArriveTime = 6, Floor = 1 },
+                new People {Type = 2, ArriveTime = 7, Floor = 1 },
+                new People {Type = 1, ArriveTime = 13, Floor = 2 },
+            };
+            int actual = Algorithms.Elevator(4, 3, 2, 3, people);
+            Assert.AreEqual(18, actual);
+        }
+
+        /// <summary>
+        /// A test for Elevator 
+        ///</summary>
+        [TestMethod()]
+        public void Elevator10()
+        {
+            List<People> people = new List<People>
+            {
+                new People {Type = 1, ArriveTime = 2, Floor = 1 },
+                new People {Type = 2, ArriveTime = 6, Floor = 1 },
+                new People {Type = 2, ArriveTime = 7, Floor = 1 },
+            };
+            int actual = Algorithms.Elevator(3, 3, 2, 1, people);
+            Assert.AreEqual(11, actual);
+
+        }
+
+        /// <summary>
+        /// A test for Elevator 
+        ///</summary>
+        [TestMethod()]
+        public void Elevator11()
+        {
+            List<People> people = new List<People>
+            {
+                new People {Type = 1, ArriveTime = 2, Floor = 1 },
+                new People {Type = 2, ArriveTime = 6, Floor = 1 },
+                new People {Type = 1, ArriveTime = 7, Floor = 1 },
+                new People {Type = 1, ArriveTime = 13, Floor = 2 },
+            };
+            int actual = Algorithms.Elevator(4, 3, 2, 3, people);
+            Assert.AreEqual(18, actual);
+        }
+
+        /// <summary>
+        /// A test for Elevator 
+        ///</summary>
+        [TestMethod()]
+        public void Elevator12()
+        {
+            List<People> people = new List<People>
+            {
+                new People {Type = 1, ArriveTime = 2, Floor = 1 },
+                new People {Type = 2, ArriveTime = 6, Floor = 1 },
+                new People {Type = 1, ArriveTime = 7, Floor = 1 },
+                new People {Type = 1, ArriveTime = 13, Floor = 2 },
+            };
+            int actual = Algorithms.Elevator(4, 3, 2, 3, people);
+            Assert.AreEqual(18, actual);
+        }
         #endregion
     }
 }

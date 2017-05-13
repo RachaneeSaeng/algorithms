@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Algorithms
 {
@@ -219,7 +219,7 @@ namespace Algorithms
         // like kid line arrangement, if you found someone is in wrong place then you swap him with next friend and see if he in the right place
         // do it from starting every time until everyone is in the right place
         //O = n^2
-        public static void BubleSort(int[] arr) 
+        public static void BubleSort(int[] arr)
         {
             bool isSorted = false;
             ///int count = 0;
@@ -241,7 +241,7 @@ namespace Algorithms
             }
 
         }
-                
+
         public static void MergeSortRecursive(int[] numbers, int left, int right)
         {
             int mid;
@@ -307,7 +307,7 @@ namespace Algorithms
                         arr[curIdx - 1] = curVal;
                         arr[curIdx] = prevVal;
                         curIdx--;
-                    }                    
+                    }
                     else
                     {
                         curIdx++;
@@ -320,7 +320,7 @@ namespace Algorithms
             };
 
         }
-               
+
         #endregion
 
         #region Searching
@@ -350,7 +350,7 @@ namespace Algorithms
             }
             return -1;
         }
-        
+
         /// <summary>
         /// Star from toIdx as min and compare to toIndx-1 and select min from the 2 values and return as min
         /// then compare to toIndx-1-1 and return min
@@ -803,7 +803,7 @@ namespace Algorithms
                 arr.Add(Array.ConvertAll(a_temp, Int32.Parse));
             }
 
-            List<HashSet<int>> countryHaveMultiAstros = new List<HashSet<int>>();            
+            List<HashSet<int>> countryHaveMultiAstros = new List<HashSet<int>>();
             while (arr.Count > 0)
             {
                 var astrosInCountry = new HashSet<int>() { arr[0][0], arr[0][1] };
@@ -819,10 +819,10 @@ namespace Algorithms
                     }
                     otherAstrosInCountry = arr.Where(set => astrosInCountry.Contains(set[0]) || astrosInCountry.Contains(set[1]));
                 }
-               
+
                 countryHaveMultiAstros.Add(astrosInCountry);
             }
-           
+
             //Total methods for each astronauts
             long sumMethod = (long)n * (long)(n - 1) / 2;
             //Subtract methods for astronauts in same country
@@ -870,7 +870,7 @@ namespace Algorithms
             }
             return new int[0];
         }
-                
+
         /// <summary>
         /// Print solution for HanoiTower problem (move disk stack, bigest in bottom smallest in top, from a tower to another tower. big must under small all the time.)
         /// </summary>
@@ -1012,14 +1012,14 @@ namespace Algorithms
         public static string DayOfProgrammer(int year)
         {
             int febDays = 28;
-            if (year < 1918 && (year % 4 ) == 0)
+            if (year < 1918 && (year % 4) == 0)
                 febDays = 29;
-            else if (year == 1918)            
+            else if (year == 1918)
                 febDays = 15;
             else if (year > 1918 && ((year % 400) == 0 || ((year % 4) == 0 && (year % 100) != 0)))
                 febDays = 29;
-            
-            int[] dayInMonths = new int[]{31, febDays, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
+            int[] dayInMonths = new int[] { 31, febDays, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
             int sumDays = 0;
             for (int i = 0; i < 12; i++)
             {
@@ -1032,6 +1032,140 @@ namespace Algorithms
                 }
             }
             return "";
+        }
+
+        public static double FindGreatXor(long number)
+        {
+            var binary = Convert.ToString(number, 2);
+            var binaryChar = binary.ToCharArray();
+            var charCount = binaryChar.Length;
+            double count = 0;
+
+            for (int i = 1; i < charCount; i++)
+            {
+                if (binaryChar[i] == '0')
+                {
+                    count += Math.Pow(2, charCount - i - 1);
+                }
+            }
+            return count;
+        }
+
+        public static string GetSmallestLarger(string s)
+        {
+            var sArr = s.ToCharArray();
+            var sArrLen = sArr.Length;
+            int i = sArrLen - 2;
+            while (i >= 0)
+            {
+                if (sArr.Skip(i + 1).Any(c => c > sArr[i]))
+                {
+                    break;
+                }
+                i--;
+            }
+
+            if (i < 0)
+                return "no answer";
+
+
+            var minGreaterValue = sArr.Skip(i + 1).Where(c => c > sArr[i]).Min();
+            var minGreaterIndex = sArr.ToList().LastIndexOf(minGreaterValue);
+            var temp = sArr[i];
+            sArr[i] = sArr[minGreaterIndex];
+            sArr[minGreaterIndex] = temp;
+
+            var remainArr = sArr.Skip(i + 1).ToList();
+            remainArr.Sort();
+
+            i++;
+            foreach (var item in remainArr)
+            {
+                sArr[i] = item;
+                i++;
+            }
+            return new string(sArr);
+
+        }
+
+        public static int Elevator(int n, int w, int c, int focusIdx, List<People> people)
+        {
+            int round = 0;
+            List<People> passenger = new List<People>();
+            int time = 0;
+            var focusArrivalTime = people[focusIdx].ArriveTime;
+            for (int i = 0; i <= focusIdx; i++)
+            {
+                if (time == 0 || people[i].ArriveTime <= time)
+                {
+                    if (passenger.Count == 0)
+                        time = time > people[i].ArriveTime ? time + w : people[i].ArriveTime + w;
+
+                    passenger.Add(people[i]);
+
+                    if (passenger.Count == c)
+                    {
+                        //Teacher first                                               
+                        while (passenger.Any(p => p.Type == 1) && people.Skip(i + 1).Any(p => p.Type == 2 && p.ArriveTime <= time))
+                        {
+                            var student = passenger.Last(p => p.Type == 1);
+                            var tc = people.Skip(i + 1).First(p => p.Type == 2 && p.ArriveTime <= time);
+
+                            people.Remove(tc);
+
+                            var studentInPeople = people.First(p => p.ArriveTime == student.ArriveTime);
+                            people[people.IndexOf(studentInPeople)] = tc;
+                            people.Insert(i + 1, student);
+
+
+                            passenger[passenger.IndexOf(student)] = tc;
+                        }
+
+                        focusIdx = people.IndexOf(people.First(p => p.ArriveTime == focusArrivalTime));
+                        var focusPerson = passenger.FirstOrDefault(p => p.ArriveTime == people[focusIdx].ArriveTime);
+                        if (focusPerson != null)
+                            time += focusPerson.Floor;
+                        else
+                            time += passenger.Max(p => p.Floor) * 2;
+                        passenger = new List<People>();
+                        round++;
+                    }
+                }
+                else
+                {
+                    if (passenger.Count > 0)
+                    {
+                        var focusPerson = passenger.FirstOrDefault(p => p.ArriveTime == people[focusIdx].ArriveTime);
+                        if (focusPerson != null)
+                            time += focusPerson.Floor;
+                        else
+                            time += passenger.Max(p => p.Floor) * 2;
+
+                        round++;
+                        passenger = new List<People>();
+                    }
+                    
+                    passenger.Add(people[i]);
+                    time = time > people[i].ArriveTime ? time + w : people[i].ArriveTime + w;
+                }
+
+            }
+
+            if (passenger.Count != 0)
+            {
+                round++;
+                time += people[focusIdx].Floor;
+            }
+
+            return time;
+        }
+
+        public class People
+        {
+            public int Type { get; set; }
+            public int ArriveTime { get; set; }
+            public int Floor { get; set; }
+            //public int DelayTime { get; set; }
         }
         #endregion
     }
