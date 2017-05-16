@@ -101,7 +101,7 @@ namespace Algorithms
 
 
 
-            Console.WriteLine("{0} {1}", round, time);
+            //Console.WriteLine("{0} {1}", round, time);
             //int[] ar = { 2, 4, 6, 8, 3 };
             //Console.WriteLine("{0}", string.Join(" ", ar.Select(v => v.ToString()).ToArray()));
 

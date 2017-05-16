@@ -179,11 +179,14 @@ namespace Algorithms
                 {
                     if (focusingValue < ar[j])
                     {
-                        var temp = ar[j];
                         ar[j + 1] = ar[j];
                         rightIndex = j;
                         count++;
                     }
+					else
+					{
+						break;
+					}
                 }
                 if (rightIndex != i)
                     ar[rightIndex] = focusingValue;
@@ -257,7 +260,7 @@ namespace Algorithms
 
         private static void DoMerge(int[] numbers, int left, int mid, int right)
         {
-            int[] temp = new int[25];
+            int[] temp = new int[numbers.Length];
             int i, left_end, num_elements, tmp_pos;
 
             left_end = (mid - 1);
@@ -321,10 +324,20 @@ namespace Algorithms
 
         }
 
+        /// <summary>
+        /// Heapsort can be thought of as an improved selection 
+        /// it divides its input into a sorted and an unsorted region, 
+        /// and it iteratively shrinks the unsorted region by extracting the largest element and moving that to the sorted region
+        /// </summary>
         private static int heapSize;
         public static void HeapSort(int[] arr)
         {
-            BuildHeap(arr);
+            heapSize = arr.Length - 1;
+            for (int i = heapSize / 2; i >= 0; i--)
+            {
+                Heapify(arr, i);
+            }
+
             for (int i = arr.Length - 1; i >= 0; i--)
             {
                 Swap(arr, 0, i);
@@ -333,34 +346,25 @@ namespace Algorithms
             }
         }
 
-        private static void BuildHeap(int[] arr)
+        private static void Heapify(int[] arr, int idx)
         {
-            heapSize = arr.Length - 1;
-            for (int i = heapSize / 2; i >= 0; i--)
+            int left = 2 * idx + 1;
+            int right = 2 * idx + 2;
+            int largestIdx = idx;
+            if (left <= heapSize && arr[left] > arr[idx])
             {
-                Heapify(arr, i);
-            }
-        }
-
-        private static void Heapify(int[] arr, int index)
-        {
-            int left = 2 * index + 1;
-            int right = 2 * index + 2;
-            int largest = index;
-            if (left <= heapSize && arr[left] > arr[index])
-            {
-                largest = left;
+                largestIdx = left;
             }
 
-            if (right <= heapSize && arr[right] > arr[largest])
+            if (right <= heapSize && arr[right] > arr[largestIdx])
             {
-                largest = right;
+                largestIdx = right;
             }
 
-            if (largest != index)
+            if (largestIdx != idx)
             {
-                Swap(arr, index, largest);
-                Heapify(arr, largest);
+                Swap(arr, idx, largestIdx);
+                Heapify(arr, largestIdx);
             }
         }
 

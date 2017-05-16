@@ -106,16 +106,29 @@ namespace Algorithms.Test
         }
 
         /// <summary>
+        ///A test for HeapSort
+        ///</summary>
+        [TestMethod()]
+        public void HeapSortTest()
+        {
+            int[] arr = { 2, 4, 6, 8, 3 };
+            int[] expected = { 2, 3, 4, 6, 8 };
+            Algorithms.HeapSort(arr);
+            CollectionAssert.AreEqual(expected, arr);
+        }
+
+        /// <summary>
         ///A test for MergeSort_Recursive
         ///</summary>
         [TestMethod()]
         public void MergeSortRecursiveTest()
         {
-            int[] numbers = null;
+            int[] arr = { 2, 4, 1, 8, 3 };
+            int[] expected = { 1,2, 3, 4, 8 };
             int left = 0;
-            int right = 0;
-            Algorithms.MergeSortRecursive(numbers, left, right);
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+            int right = arr.Length-1;
+            Algorithms.MergeSortRecursive(arr, left, right);
+            CollectionAssert.AreEqual(expected, arr);
         }
 
         /// <summary>
