@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 //using System.Diagnostics.Contracts;
 
 namespace Algorithms
@@ -25,6 +26,10 @@ namespace Algorithms
 
         static void Main(string[] args)
         {
+
+
+
+
             //int val = Convert.ToInt32(Console.ReadLine());
             //int n = Convert.ToInt32(Console.ReadLine());
             //string[] arr_temp = Console.ReadLine().Split(' ');
@@ -89,22 +94,27 @@ namespace Algorithms
             //    Console.WriteLine(new String('+', c).Replace("+", "..O.."));
             //}
 
-            int n = Convert.ToInt32(Console.ReadLine());
-            string[] tokens_rb = Console.ReadLine().Split(' ');
-            int rb = Convert.ToInt32(tokens_rb[0]);
-            int rg = Convert.ToInt32(tokens_rb[1]);
-            int br = Convert.ToInt32(tokens_rb[2]);
-            int bg = Convert.ToInt32(tokens_rb[3]);
-            string[] tokens_gr = Console.ReadLine().Split(' ');
-            int gr = Convert.ToInt32(tokens_gr[0]);
-            int gb = Convert.ToInt32(tokens_gr[1]);
+            //int n = Convert.ToInt32(Console.ReadLine());
+            //for (int i = 1; i <= n; i++)
+            //{
+            //    Console.WriteLine(new string('#',i).PadLeft(n));
+            //}
+            //string[] tokens_rb = Console.ReadLine().Split(' ');
+            //int rb = Convert.ToInt32(tokens_rb[0]);
+            //int rg = Convert.ToInt32(tokens_rb[1]);
+            //int br = Convert.ToInt32(tokens_rb[2]);
+            //int bg = Convert.ToInt32(tokens_rb[3]);
+            //string[] tokens_gr = Console.ReadLine().Split(' ');
+            //int gr = Convert.ToInt32(tokens_gr[0]);
+            //int gb = Convert.ToInt32(tokens_gr[1]);
 
 
 
             //Console.WriteLine("{0} {1}", round, time);
-            //int[] ar = { 2, 4, 6, 8, 3 };
+            int[] ar = { 2, 4, 6, 8, 3 };
             //Console.WriteLine("{0}", string.Join(" ", ar.Select(v => v.ToString()).ToArray()));
 
+            var x = ar.Sum(i => i);
             Console.ReadLine();
 
             //Stopwatch st = new Stopwatch();

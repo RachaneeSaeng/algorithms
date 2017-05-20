@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -39,10 +40,10 @@ namespace Algorithms
             {
                 if (!set.Add(arr[i]))
                 {
-                    return false;
+                    return true;
                 }
             }
-            return true;
+            return false;
         }
 
         public static bool CheckDuplicate2(int[] arr)
@@ -52,11 +53,11 @@ namespace Algorithms
             for (int i = 0; i < arr.Length; i++)
             {
                 if (set.Contains(arr[i]))
-                    return false;
+                    return true;
                 else
                     set.Add(arr[i]);
             }
-            return true;
+            return false;
         }
 
         /// <summary>
@@ -183,10 +184,10 @@ namespace Algorithms
                         rightIndex = j;
                         count++;
                     }
-					else
-					{
-						break;
-					}
+                    else
+                    {
+                        break;
+                    }
                 }
                 if (rightIndex != i)
                     ar[rightIndex] = focusingValue;
@@ -452,6 +453,14 @@ namespace Algorithms
             return minDistance.HasValue ? Math.Sqrt(minDistance.Value) : -1;
         }
 
+        private static double DistanceSquare(Point p1, Point p2)
+        {
+            int difX = p1.X - p2.X;
+            int difY = p1.Y - p2.Y;
+
+            return (difX * difX + difY * difY); // Actual distance is Sqrt(difX^2 + difY^2) but we don't need to so to improve performance
+        }
+
         /// <summary>
         /// Find minimum distance between 2 point in many points
         /// O = n log n
@@ -523,14 +532,6 @@ namespace Algorithms
         }
 
 
-        private static double DistanceSquare(Point p1, Point p2)
-        {
-            int difX = p1.X - p2.X;
-            int difY = p1.Y - p2.Y;
-
-            return (difX * difX + difY * difY); // Actual distance is Sqrt(difX^2 + difY^2) but we don't need to so to improve performance
-        }
-
         //public static Point GetClosestPointToMe(Point me, Point[] point)
         //{
         //    var closestPoint = new Point();
@@ -587,6 +588,11 @@ namespace Algorithms
                 return 'D';
         }
 
+        /// <summary>
+        /// Print pair numbe in sorted list that can sum of them = n
+        /// </summary>
+        /// <param name="arr"></param>
+        /// <param name="n"></param>
         public static void PrintPair(int[] arr, int n)
         {
             if (arr.Length <= 1 || n < (arr[0] + arr[1]) || n > (arr[arr.Length - 2] + arr[arr.Length - 1]))
@@ -654,8 +660,8 @@ namespace Algorithms
                 return 0;
             else
             {
-                int foundIdx = IndexOfWord(str.Substring(1), word);
-                return (foundIdx == -1 ? -1 : foundIdx + 1);
+                int foundIdx = 1 + IndexOfWord(str.Substring(1), word);
+                return (foundIdx == -1 ? -1 : foundIdx);
             }
         }
 
@@ -909,7 +915,7 @@ namespace Algorithms
                     return new int[] { itemWeights[i] };
                 else
                 {
-                    int[] combinedWeight = Knapsack(itemWeights, i + 1, totalWeight - itemWeights[i]); // itemWeights[i] + Knapsack(next items having total weight - totalWeight - itemWeights[i]
+                    int[] combinedWeight = Knapsack(itemWeights, i + 1, totalWeight - itemWeights[i]); // itemWeights[i] + Knapsack(next items having total weight = totalWeight - itemWeights[i]
                     if (combinedWeight.Length > 0)
                     {
                         int[] ans = new int[combinedWeight.Length + 1];
@@ -1198,7 +1204,7 @@ namespace Algorithms
                         round++;
                         passenger = new List<People>();
                     }
-                    
+
                     passenger.Add(people[i]);
                     time = time > people[i].ArriveTime ? time + w : people[i].ArriveTime + w;
                 }
@@ -1221,6 +1227,93 @@ namespace Algorithms
             public int Floor { get; set; }
             //public int DelayTime { get; set; }
         }
+
+        public static bool HasBalancedBrackets(string str)
+        {
+            Dictionary<string, string> bracketPairs = new Dictionary<string, string>
+            {
+                { ")", "(" },
+                { "}", "{" },
+                { "]", "[" },
+                { ">", "<" }
+            };
+
+            Stack s = new Stack();
+            char[] chars = str.ToCharArray();
+            for (int i = 0; i < chars.Length; i++)
+            {
+                string c = chars[i].ToString();
+                if (IsFocusChar(c))
+                {
+                    if (bracketPairs.ContainsKey(c))
+                    {
+                        if (s.Count > 0 && s.Pop().ToString() == bracketPairs[c])
+                            continue;
+                        else
+                            return false;
+                    }
+                    else
+                    {
+                        s.Push(c);
+                    }
+                }
+            }
+            return s.Count == 0;
+        }
+
+        private static bool IsFocusChar(string c)
+        {
+            return c == "(" || c == ")" || c == "{" || c == "}" || c == "[" || c == "]" || c == "<" || c == ">";
+        }
+
+        public static int BstDistance(int[] values, int node1, int node2)
+        {
+            if (values.Contains(node1) && values.Contains(node2))
+            {
+                Array.Sort(values);
+
+                int midIdx = (values.Length) / 2;
+                var root = values[midIdx];
+
+                int node1Level = GetNodeLevel(values, node1, 0);
+                int node2Level = GetNodeLevel(values, node2, 0);
+
+                if (node1 < root && node2 > root || node1 > root && node2 < root)
+                    node2Level = -node2Level;
+
+                return Math.Abs(node1Level - node2Level);
+            }
+            return -1;
+        }
+
+        private static int GetNodeLevel(int[] values, int node, int currentLevel)
+        {
+            int midIdx = (values.Length) / 2;
+            var root = values[midIdx];
+            if (node == root)
+            {
+                return currentLevel;
+            }
+            else
+            {
+                if (values.Length <= 3)
+                {
+                    return currentLevel + 1;
+                }
+                else
+                {
+                    if (node < root)
+                        return GetNodeLevel(values.Take(midIdx).ToArray(), node, currentLevel + 1);
+                    else
+                        return GetNodeLevel(values.Skip(midIdx + 1).Take(values.Length - midIdx - 1).ToArray(), node, currentLevel + 1);
+                }
+            }
+
+        }
         #endregion
+
     }
+
+
+
 }

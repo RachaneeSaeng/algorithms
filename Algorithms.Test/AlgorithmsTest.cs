@@ -124,9 +124,9 @@ namespace Algorithms.Test
         public void MergeSortRecursiveTest()
         {
             int[] arr = { 2, 4, 1, 8, 3 };
-            int[] expected = { 1,2, 3, 4, 8 };
+            int[] expected = { 1, 2, 3, 4, 8 };
             int left = 0;
-            int right = arr.Length-1;
+            int right = arr.Length - 1;
             Algorithms.MergeSortRecursive(arr, left, right);
             CollectionAssert.AreEqual(expected, arr);
         }
@@ -692,6 +692,41 @@ namespace Algorithms.Test
             };
             int actual = Algorithms.Elevator(4, 3, 2, 3, people);
             Assert.AreEqual(18, actual);
+        }
+
+        [TestMethod()]
+        public void HasBalancedBrackets()
+        {
+            string str = ")([])";
+            Assert.IsFalse(Algorithms.HasBalancedBrackets(str));
+
+            str = "([])(";
+            Assert.IsFalse(Algorithms.HasBalancedBrackets(str));
+
+            str = "";
+            Assert.IsTrue(Algorithms.HasBalancedBrackets(str));
+
+            str = "[({})]<>";
+            Assert.IsTrue(Algorithms.HasBalancedBrackets(str));
+
+            str = "[he({lo})eerr]<dfdfe>";
+            Assert.IsTrue(Algorithms.HasBalancedBrackets(str));
+        }
+
+        [TestMethod()]
+        public void BstDistance()
+        {
+            int[] arr1 = { 5, 6, 3, 4, 2, 1 };
+            var distance = Algorithms.BstDistance(arr1, 2, 5);
+            Assert.AreEqual(3, distance);
+
+            int[] arr2 = { 10, 11, 9, 8, 5, 12, 6, 3, 4, 2, 1 };
+            distance = Algorithms.BstDistance(arr2, 12, 5);
+            Assert.AreEqual(4, distance);
+
+            int[] arr3 = { 10, 11, 9, 8, 5, 12, 6, 3, 4, 2, 1 };
+            distance = Algorithms.BstDistance(arr3, 12, 20);
+            Assert.AreEqual(-1, distance);
         }
         #endregion
     }
