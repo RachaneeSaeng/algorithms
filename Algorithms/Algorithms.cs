@@ -123,8 +123,10 @@ namespace Algorithms
                     maxIdx--;
 
                 if (minIdx < maxIdx) //some value stop counter in the upper conditions which make minIdx < maxIdx
-                {
-                    //swap
+                {                    
+                    if (arr[minIdx] == arr[maxIdx]) //if both values are equal move them to pivot position                    
+                        maxIdx--;
+                       
                     int temp = arr[maxIdx];
                     arr[maxIdx] = arr[minIdx];
                     arr[minIdx] = temp;
@@ -719,6 +721,38 @@ namespace Algorithms
             }
             return true;
         }
+        
+        public static string ReplaceString(string str)
+        {
+            var chars = str.Trim().ToCharArray();
+            var originalLen = chars.Length;
+
+            int spaceCount = 0;
+            foreach (var c in chars)
+            {
+                if (c == ' ')
+                    spaceCount++;
+            }
+
+            int newIndex = originalLen + (spaceCount * 2) - 1;
+
+            for (int orgIndex = originalLen-1; orgIndex >= 0; orgIndex--)
+            {
+                if(chars[orgIndex] == ' ')
+                {
+                    chars[newIndex] = '0';
+                    chars[newIndex-1] = '2';
+                    chars[newIndex-2] = '%';
+                    newIndex -= 3;
+                }
+                else
+                {
+                    chars[newIndex] = chars[orgIndex];
+                    newIndex--;
+                }
+            }
+            return chars.ToString();
+        }
 
         /// <summary>
         /// Compares the two strings based on letter pair matches
@@ -939,7 +973,7 @@ namespace Algorithms
         {
             if (diskNum <= 1)
             {
-                Console.WriteLine("{0}  Move disk from tower {1} to tower {2}", move++, fromTower, toTower);
+                Console.WriteLine("{0} Move disk from tower {1} to tower {2}", move++, fromTower, toTower);
             }
             else
             {

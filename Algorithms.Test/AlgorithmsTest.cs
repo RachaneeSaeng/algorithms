@@ -64,6 +64,36 @@ namespace Algorithms.Test
             CollectionAssert.AreEqual(expected, arr);
         }
 
+        /// <summary>
+        ///A test for QuickSort
+        ///</summary>
+        [TestMethod()]
+        public void QuickSortTest_2()
+        {
+            // TODO: Initialize to an appropriate value
+            int[] arr = { 10, 5, 16, 10, 14 };
+            int[] expected = { 5, 10, 10, 14, 16 };
+            int minIdx = 0; // TODO: Initialize to an appropriate value
+            int maxIdx = arr.Length - 1; // TODO: Initialize to an appropriate value
+            Algorithms.QuickSort(arr, minIdx, maxIdx);
+            CollectionAssert.AreEqual(expected, arr);
+        }
+
+        /// <summary>
+        ///A test for QuickSort
+        ///</summary>
+        [TestMethod()]
+        public void QuickSortTest_3()
+        {
+            // TODO: Initialize to an appropriate value
+            int[] arr = { 10, 5, 16, 11, 10, 14 };
+            int[] expected = { 5, 10, 10, 11, 14, 16 };
+            int minIdx = 0; // TODO: Initialize to an appropriate value
+            int maxIdx = arr.Length - 1; // TODO: Initialize to an appropriate value
+            Algorithms.QuickSort(arr, minIdx, maxIdx);
+            CollectionAssert.AreEqual(expected, arr);
+        }
+
 
         /// <summary>
         ///A test for BubleSort
