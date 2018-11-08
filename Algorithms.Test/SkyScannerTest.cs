@@ -19,6 +19,11 @@ namespace Algorithms.Test
             SkyScanner.OutputMostPopularDestination(2);
         }
 
+        [TestMethod()]
+        public void Simple_2()
+        {
+            SkyScanner.OutputCommonManager(2);
+        }
         #endregion
 
     }

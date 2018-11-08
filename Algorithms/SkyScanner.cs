@@ -107,11 +107,11 @@ namespace Algorithms
 
 
             // find fist common manager of the firstEmployee and secondEmployee
-            var rootManager = FindRootManager(relationships);
+            //var rootManager = FindRootManager(relationships);
             var firstEmployee = relationships.ContainsKey(firstName) ? relationships[firstName] : new Employee(firstName);
             var secondEmployee = relationships.ContainsKey(secondName) ? relationships[secondName] : new Employee(secondName);
 
-            var firstCommonManager = FindFirstCommonManager(rootManager, firstEmployee, secondEmployee);
+            var firstCommonManager = FindFirstCommonManager(firstEmployee, secondEmployee);
 
             // print result
             PrintOutput(firstCommonManager);
@@ -154,20 +154,20 @@ namespace Algorithms
             return relationships;
         }
 
-        static Employee FindRootManager(Dictionary<string, Employee> relationships)
-        {
-            foreach (var rs in relationships)
-            {
-                var employee = rs.Value;
-                if (employee.Manager == null)
-                {
-                    return employee;
-                }
-            }
-            return null;
-        }
+        //static Employee FindRootManager(Dictionary<string, Employee> relationships)
+        //{
+        //    foreach (var rs in relationships)
+        //    {
+        //        var employee = rs.Value;
+        //        if (employee.Manager == null)
+        //        {
+        //            return employee;
+        //        }
+        //    }
+        //    return null;
+        //}
 
-        static string FindFirstCommonManager(Employee rootManager, Employee firstEmployee, Employee secondEmployee)
+        static string FindFirstCommonManager(Employee firstEmployee, Employee secondEmployee)
         {
             int diffLevel = Depth(firstEmployee) - Depth(secondEmployee);
             Employee first = diffLevel > 0 ? firstEmployee : secondEmployee;
