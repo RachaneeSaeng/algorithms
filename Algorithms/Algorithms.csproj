@@ -44,6 +44,7 @@
     <Compile Include="Algorithms.cs" />
     <Compile Include="Amazon.cs" />
     <Compile Include="CrossOver.cs" />
+    <Compile Include="NTUC.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
