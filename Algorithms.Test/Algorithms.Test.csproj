@@ -49,6 +49,7 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SkyScannerTest.cs" />
     <Compile Include="NTUCTest.cs" />
     <Compile Include="AmazonTest.cs" />
     <Compile Include="CrossOverTest.cs" />
