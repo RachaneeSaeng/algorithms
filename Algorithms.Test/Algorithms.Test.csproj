@@ -49,6 +49,8 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TransferWise2Test.cs" />
+    <Compile Include="TransferWise1Test.cs" />
     <Compile Include="SkyScannerTest.cs" />
     <Compile Include="NTUCTest.cs" />
     <Compile Include="AmazonTest.cs" />

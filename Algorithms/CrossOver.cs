@@ -11,8 +11,19 @@ namespace Algorithms
 
         public struct Element
         {
+            public Element(int val)
+            {
+                Value = 10;
+                NumberOfOne = 0;
+                var x = new MyClass();
+            }
+
             public int Value { get; set; }
             public int NumberOfOne { get; set; }
+            //public Element()
+            //{
+            //    var y = new MyClass();
+            //}
         }
 
         public static int[] Rearrange(int[] elements)

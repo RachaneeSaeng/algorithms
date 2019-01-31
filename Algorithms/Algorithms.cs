@@ -123,10 +123,10 @@ namespace Algorithms
                     maxIdx--;
 
                 if (minIdx < maxIdx) //some value stop counter in the upper conditions which make minIdx < maxIdx
-                {                    
+                {
                     if (arr[minIdx] == arr[maxIdx]) //if both values are equal move them to pivot position                    
                         maxIdx--;
-                       
+
                     int temp = arr[maxIdx];
                     arr[maxIdx] = arr[minIdx];
                     arr[minIdx] = temp;
@@ -721,7 +721,7 @@ namespace Algorithms
             }
             return true;
         }
-        
+
         public static string ReplaceString(string str)
         {
             var chars = str.Trim().ToCharArray();
@@ -736,13 +736,13 @@ namespace Algorithms
 
             int newIndex = originalLen + (spaceCount * 2) - 1;
 
-            for (int orgIndex = originalLen-1; orgIndex >= 0; orgIndex--)
+            for (int orgIndex = originalLen - 1; orgIndex >= 0; orgIndex--)
             {
-                if(chars[orgIndex] == ' ')
+                if (chars[orgIndex] == ' ')
                 {
                     chars[newIndex] = '0';
-                    chars[newIndex-1] = '2';
-                    chars[newIndex-2] = '%';
+                    chars[newIndex - 1] = '2';
+                    chars[newIndex - 2] = '%';
                     newIndex -= 3;
                 }
                 else
@@ -1345,6 +1345,48 @@ namespace Algorithms
 
         }
         #endregion
+
+
+        public struct KeyOccurency
+        {
+            public string Key { get; set; }
+            public int Count { get; set; }
+        }
+
+        public static KeyOccurency GetKeyOccurency(string str)
+        {
+            if (string.IsNullOrEmpty(str))
+            {
+                return new KeyOccurency();
+            }
+
+            var charCount = new Dictionary<string, int>();
+
+            foreach (var c in str.ToCharArray())
+            {
+                var cStr = c.ToString();
+                if (charCount.ContainsKey(cStr))
+                {
+                    charCount[cStr]++;
+                }
+                else
+                {
+                    charCount[cStr] = 1;
+                }
+            }
+
+            var maxOccurrency = new KeyOccurency();
+            foreach (var keyPair in charCount)
+            {
+                if (string.IsNullOrEmpty(maxOccurrency.Key) || keyPair.Value > maxOccurrency.Count)
+                {
+                    maxOccurrency.Key = keyPair.Key;
+                    maxOccurrency.Count = keyPair.Value;
+                }
+            }
+
+            return maxOccurrency;
+        }
 
     }
 

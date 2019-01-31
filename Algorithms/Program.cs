@@ -16,19 +16,29 @@ namespace Algorithms
         static char[] ar = new char[n];
         static int mod = 1000000007;
 
-        class People
-        {
-            public int Type { get; set; }
-            public int ArriveTime { get; set; }
-            public int Floor { get; set; }
-            //public int DelayTime { get; set; }
-        }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args)
         {
 
+            //switch (args[0])
+            //{
+            //    case "":
+            //        var p = 10;
+            //        break;                
+            //}
 
+            //var people = new People[] { new People() };
+            //var names = from person in people select person.GetName();
+            //var nameArr = names.ToArray();
+            //foreach (var name in names)
+            //{
+            //    Console.WriteLine();
+            //}
 
+            var b = new B();
 
             //int val = Convert.ToInt32(Console.ReadLine());
             //int n = Convert.ToInt32(Console.ReadLine());
@@ -108,8 +118,6 @@ namespace Algorithms
             //int gr = Convert.ToInt32(tokens_gr[0]);
             //int gb = Convert.ToInt32(tokens_gr[1]);
 
-
-
             //Console.WriteLine("{0} {1}", round, time);
             int[] ar = { 2, 4, 6, 8, 3 };
             //Console.WriteLine("{0}", string.Join(" ", ar.Select(v => v.ToString()).ToArray()));
@@ -178,6 +186,8 @@ namespace Algorithms
 
     public class MyClass : IDisposable
     {
+        public int MyProperty { get; set; }
+
         private bool disposed = false;
 
         protected virtual void Dispose(bool disposing)
@@ -288,5 +298,76 @@ namespace Algorithms
     public struct MyGen<T> where T : struct
     {
 
+    }
+
+    public interface IT1
+    {
+        void Sggg();
+    }
+    public interface IT2
+    {
+        void Sggg();
+    }
+
+    public class A : IT1, IT2
+    {
+        public readonly int MyProperty = 0;
+
+        public A()
+        {
+            Console.WriteLine("A");
+        }
+        void IT1.Sggg()
+        {
+            throw new NotImplementedException();
+        }
+        void IT2.Sggg()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class B : A
+    {
+        public B() : base()
+        {
+            //MyProperty = 20;
+            Console.WriteLine("B");
+        }
+
+        public unsafe void Check()
+        {
+            int i = 10;
+            int* pi = &i;
+
+            string[,] s1;
+            string[][] s2;
+        }
+    }
+    public class People
+    {
+        public int Type { get; set; }
+        public int ArriveTime { get; set; }
+        public int Floor { get; set; }
+        //public int DelayTime { get; set; }
+
+        //private int h;
+        //public int H
+        //{
+        //    get { return h; }
+        //    set { h = value; }
+        //}
+
+        //public void set_H(int h) {
+        //    this.h = h;
+        //    }
+    }
+
+    public static class UtilClass
+    {
+        public static string GetName(this People p)
+        {
+            throw new InvalidCastException();
+        }
     }
 }
