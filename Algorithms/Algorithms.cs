@@ -1344,6 +1344,54 @@ namespace Algorithms
             }
 
         }
+
+        static int[] BreakingRecords(int[] scores) 
+        {
+            var most = -1;
+            var least = -1;
+
+            var mostBreaking = 0;
+            var leastBreaking = 0;
+            for (var i = 1; i < scores.Length; i++)
+            {
+                if (i == 1)
+                {
+                    if (scores[i] > scores[i-1])
+                    {
+                        most = scores[i];
+                        least = scores[i-1];
+                        mostBreaking += 1;
+                    } else if (scores[i] < scores[i - 1])
+                    {
+                        most = scores[i - 1];
+                        least = scores[i];
+                        leastBreaking += 1;
+                    }
+                    else
+                    {
+                        most = scores[i];
+                        least = scores[i];
+                    }
+                    
+                }
+                else
+                {
+                    if (scores[i] > most)
+                    {
+                        most = scores[i];
+                        mostBreaking += 1;
+                    } else if (scores[i] < least)
+                    {
+                        least = scores[i];
+                        leastBreaking += 1;
+                    }
+                }
+
+            }
+
+            return new [] {mostBreaking, leastBreaking};
+        }
+
         #endregion
 
 
