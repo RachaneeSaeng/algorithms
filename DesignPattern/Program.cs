@@ -9,7 +9,7 @@ namespace DesignPattern
         static void Main(string[] args)
         {
             var doc = new Resume();
-            Console.WriteLine(doc.Pages.Count);
+            //Console.WriteLine(doc.Pages.Count);
             Console.ReadLine();
         }
     }
@@ -48,7 +48,7 @@ namespace DesignPattern
             this.CreatePages();
         }
 
-        public List<Page> Pages => new ReadOnlyCollection<Page>(_pages);
+        //public List<Page> Pages => new ReadOnlyCollection<Page>(_pages);
 
         // Factory Method
 
@@ -67,7 +67,7 @@ namespace DesignPattern
 
         public override void CreatePages()
         {
-            Pages.Add(new SkillsPage());
+            //Pages.Add(new SkillsPage());
         }
     }
 }
