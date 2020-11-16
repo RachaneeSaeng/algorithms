@@ -14,9 +14,9 @@ public class TreeNode
     }
 }
 
-public class LeetCode
+public class Algorithms
 {
-    public static int MaxCoins(int[] piles)
+    public int MaxCoins(int[] piles)
     {
         Array.Sort(piles);
 
@@ -30,9 +30,9 @@ public class LeetCode
         return sum;
     }
 
-    private static readonly Dictionary<int, List<TreeNode>> memo = new Dictionary<int, List<TreeNode>>();
+    private readonly Dictionary<int, List<TreeNode>> memo = new Dictionary<int, List<TreeNode>>();
 
-    public static IList<TreeNode> AllPossibleFBT(int N)
+    public IList<TreeNode> AllPossibleFBT(int N)
     {
         if (!memo.ContainsKey(N))
         {
@@ -122,5 +122,49 @@ public class LeetCode
         }
         return sign ? -reminder : reminder;
     }
+
+    public int UniquePaths(int m, int n) {
+        var pos = new int[m, n];
+        
+        for (int iM = 0; iM < m; iM++)
+        {
+            for (int iN = 0; iN < n; iN++)
+            {
+                if (iM == 0 || iN == 0)
+                {
+                    pos[iM,iN] = 1;
+                }
+                else
+                {
+                    pos[iM,iN] = pos[iM-1,iN] + pos[iM,iN-1]; // possibilities of going down + right
+                }
+            }
+        }
+        
+        return pos[m-1,n-1];
+    }
+
+    public int CoinChange(int[] coins, int amount) {
+        int[] dp = new int[amount+1];
+        
+        dp[0] = 0;
+        
+        for(int am = 1; am <= amount ; am++)
+        {
+            int minForAmount = int.MaxValue;
+            foreach(int coin in coins)
+            {
+                if(am-coin >=0 && dp[am-coin] != int.MaxValue)
+                {
+                    minForAmount = Math.Min(minForAmount, dp[am-coin] + 1);
+                }
+            }
+            
+            dp[am] = minForAmount;
+        }
+        
+        return (dp[amount] == int.MaxValue) ? -1 : dp[amount];
+    }
+
 
 }
