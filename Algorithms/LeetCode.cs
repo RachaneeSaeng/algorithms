@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
 
 public class TreeNode
 {
@@ -23,9 +20,9 @@ public class LeetCode
     {
         Array.Sort(piles);
 
-        int sum = 0;
+        var sum = 0;
 
-        for (int i = piles.Length - 2; i >= piles.Length / 3; i -= 2)
+        for (var i = piles.Length - 2; i >= piles.Length / 3; i -= 2)
         {
             sum += piles[i];
         }
@@ -33,7 +30,7 @@ public class LeetCode
         return sum;
     }
 
-    static Dictionary<int, List<TreeNode>> memo = new Dictionary<int, List<TreeNode>>();
+    private static readonly Dictionary<int, List<TreeNode>> memo = new Dictionary<int, List<TreeNode>>();
 
     public static IList<TreeNode> AllPossibleFBT(int N)
     {
@@ -100,16 +97,16 @@ public class LeetCode
 
     public int Divide(int dividend, int divisor)
     {
-        if (divisor == 0 | (dividend == Int32.MinValue && divisor == -1))
-            return Int32.MaxValue;
+        if (divisor == 0 | (dividend == int.MinValue && divisor == -1))
+            return int.MaxValue;
 
-        bool sign = (dividend > 0) ^ (divisor > 0);
-        uint positiveDevidend = (uint)(dividend < 0 ? -dividend : dividend);
-        uint positiveDivisor = (uint)(divisor < 0 ? -divisor : divisor);
+        var sign = (dividend > 0) ^ (divisor > 0);
+        var positiveDevidend = (uint)(dividend < 0 ? -dividend : dividend);
+        var positiveDivisor = (uint)(divisor < 0 ? -divisor : divisor);
 
-        int reminder = 0;
+        var reminder = 0;
 
-        for (int i = 31; i >= 0; i--)
+        for (var i = 31; i >= 0; i--)
         {
             // x>>i = x/2^i
             if ((positiveDevidend >> i) >= positiveDivisor)
